@@ -1,0 +1,7 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Nov 04 12:00:27 UTC 2025","Tue Nov 04 12:00:27 UTC 2025","639","","com.example.petstore.PetApiCrudTests","","com.example.petstore.PetApiCrudTests","getAfterDelete","Get after delete -> 404",""
+"passed","Tue Nov 04 12:00:22 UTC 2025","Tue Nov 04 12:00:24 UTC 2025","1322","","com.example.petstore.PetApiCrudTests","","com.example.petstore.PetApiCrudTests","updatePetPut","Update pet (PUT /pet) -> 200",""
+"passed","Tue Nov 04 12:00:17 UTC 2025","Tue Nov 04 12:00:20 UTC 2025","3505","","com.example.petstore.PetApiCrudTests","","com.example.petstore.PetApiCrudTests","createPet","Create pet (POST /pet) -> 200",""
+"passed","Tue Nov 04 12:00:20 UTC 2025","Tue Nov 04 12:00:22 UTC 2025","2062","","com.example.petstore.PetApiCrudTests","","com.example.petstore.PetApiCrudTests","getPet","Get pet (GET /pet/{id}) -> 200",""
+"passed","Tue Nov 04 12:00:26 UTC 2025","Tue Nov 04 12:00:27 UTC 2025","132","","com.example.petstore.PetApiCrudTests","","com.example.petstore.PetApiCrudTests","deletePet","Delete pet (DELETE /pet/{id}) -> 200",""
+"passed","Tue Nov 04 12:00:24 UTC 2025","Tue Nov 04 12:00:26 UTC 2025","2703","","com.example.petstore.PetApiCrudTests","","com.example.petstore.PetApiCrudTests","findByStatus","GET /pet/findByStatus?status=sold -> 200",""
