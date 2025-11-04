@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup JDK 17
@@ -26,18 +26,47 @@ jobs:
       - name: Run tests
         run: mvn -B test
 
+      # === Install Allure CLI (no Docker) ===
+      - name: Install Allure CLI
+        if: always()
+        run: |
+          ALLURE_VERSION=2.26.0
+          sudo apt-get update -y
+          sudo apt-get install -y unzip
+          curl -sL -o allure-${ALLURE_VERSION}.zip \
+            https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.zip
+          unzip -q allure-${ALLURE_VERSION}.zip
+          sudo mv allure-${ALLURE_VERSION} /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
+          allure --version
+
+      # (Опционально) подтянуть историю из gh-pages для трендов
+      - name: Fetch existing gh-pages (history)
+        if: always()
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+        continue-on-error: true
+
       - name: Generate Allure report
         if: always()
-        uses: simple-elf/allure-report-action@v1.7
-        with:
-          allure_results: target/allure-results
-          allure_report: target/allure-report
-          allure_history: allure-history
+        run: |
+          # если есть старая история - подмешаем её
+          if [ -d gh-pages/history ]; then
+            mkdir -p target/allure-results/history
+            cp -r gh-pages/history target/allure-results/ || true
+          fi
+          allure generate target/allure-results -o allure-report --clean
+          # вынесем history отдельно для следующего запуска
+          if [ -d allure-report/history ]; then
+            cp -r allure-report/history ./history
+          fi
 
       - name: Publish to gh-pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-history
+          publish_dir: allure-report
           publish_branch: gh-pages
