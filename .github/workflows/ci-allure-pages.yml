@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup JDK 17
         uses: actions/setup-java@v4
@@ -39,7 +41,7 @@ jobs:
           sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
           allure --version
 
-      - name: Fetch existing gh-pages (history)
+      - name: Fetch gh-pages (history)
         if: always()
         uses: actions/checkout@v4
         with:
@@ -47,17 +49,22 @@ jobs:
           path: gh-pages
         continue-on-error: true
 
-      - name: Generate Allure report
+      - name: Prepare history and generate report
         if: always()
         run: |
-          if [ -d gh-pages/history ]; then
-            mkdir -p target/allure-results/history
-            cp -r gh-pages/history target/allure-results/ || true
+          if [ ! -d "target/allure-results" ] || [ -z "$(ls -A target/allure-results || true)" ]; then
+            echo "No allure results found. Skipping report generation."
+            mkdir -p allure-report
+            echo "<h1>No Allure results</h1>" > allure-report/index.html
+          else
+            if [ -d "gh-pages/history" ]; then
+              mkdir -p target/allure-results/history
+              cp -r gh-pages/history/* target/allure-results/history/ || true
+            fi
+            # 3) генерим отчёт
+            allure generate target/allure-results -o allure-report --clean
           fi
-          allure generate target/allure-results -o allure-report --clean
-          if [ -d allure-report/history ]; then
-            cp -r allure-report/history ./history
-          fi
+          ls -la allure-report || true
 
       - name: Publish to gh-pages
         if: always()
