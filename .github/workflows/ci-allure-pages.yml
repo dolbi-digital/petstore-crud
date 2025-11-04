@@ -26,7 +26,6 @@ jobs:
       - name: Run tests
         run: mvn -B test
 
-      # === Install Allure CLI (no Docker) ===
       - name: Install Allure CLI
         if: always()
         run: |
@@ -40,7 +39,6 @@ jobs:
           sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
           allure --version
 
-      # (Опционально) подтянуть историю из gh-pages для трендов
       - name: Fetch existing gh-pages (history)
         if: always()
         uses: actions/checkout@v4
@@ -52,13 +50,11 @@ jobs:
       - name: Generate Allure report
         if: always()
         run: |
-          # если есть старая история - подмешаем её
           if [ -d gh-pages/history ]; then
             mkdir -p target/allure-results/history
             cp -r gh-pages/history target/allure-results/ || true
           fi
           allure generate target/allure-results -o allure-report --clean
-          # вынесем history отдельно для следующего запуска
           if [ -d allure-report/history ]; then
             cp -r allure-report/history ./history
           fi
