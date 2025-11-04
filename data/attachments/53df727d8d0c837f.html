@@ -1,0 +1,55 @@
+<div>PUT to https://petstore3.swagger.io/api/v3/pet</div>
+
+    <h4>Body</h4>
+    <div>
+    <pre class="preformated-text">
+{
+    &quot;id&quot;: 715037777,
+    &quot;category&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;dogs&quot;
+    },
+    &quot;name&quot;: &quot;updated-dog&quot;,
+    &quot;photoUrls&quot;: [
+        &quot;https://example.com/dog.png&quot;
+    ],
+    &quot;tags&quot;: [
+        {
+            &quot;id&quot;: 11,
+            &quot;name&quot;: &quot;automation&quot;
+        }
+    ],
+    &quot;status&quot;: &quot;sold&quot;
+}    </pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>Accept: application/json, application/javascript, text/javascript, text/json</div>
+            <div>Content-Type: application/json</div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        curl -v -X PUT &#39;https://petstore3.swagger.io/api/v3/pet&#39; -H &#39;Accept: application/json, application/javascript, text/javascript, text/json&#39; -H &#39;Content-Type: application/json&#39; -d &#39;{
+    &quot;id&quot;: 715037777,
+    &quot;category&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;dogs&quot;
+    },
+    &quot;name&quot;: &quot;updated-dog&quot;,
+    &quot;photoUrls&quot;: [
+        &quot;https://example.com/dog.png&quot;
+    ],
+    &quot;tags&quot;: [
+        {
+            &quot;id&quot;: 11,
+            &quot;name&quot;: &quot;automation&quot;
+        }
+    ],
+    &quot;status&quot;: &quot;sold&quot;
+}&#39;
+    </div>
+
